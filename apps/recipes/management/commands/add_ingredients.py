@@ -8,7 +8,7 @@ from apps.recipes import models
 class Command(BaseCommand):
     def handle(self, *args, **options):  # noqa: WPS110
         with open(
-            'parts/ingredients/ingredients.csv',
+            'fixtures/ingredients.csv',
             encoding='utf-8',
         ) as csvfile:
             reader = csv.reader(csvfile)
