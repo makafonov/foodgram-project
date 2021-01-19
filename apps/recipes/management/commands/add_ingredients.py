@@ -13,5 +13,5 @@ class Command(BaseCommand):
         ) as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
-                ingredient = models.Ingredient(title=row[0], dimension=row[1])
+                ingredient = models.Ingredient(name=row[0], dimension=row[1])
                 ingredient.save()

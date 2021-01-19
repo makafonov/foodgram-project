@@ -5,7 +5,7 @@ _DIMENSION_MAX_LENGTH = 20
 
 
 class Ingredient(models.Model):
-    title = models.CharField(
+    name = models.CharField(
         max_length=_TITLE_MAX_LENGTH,
         verbose_name='Наименование',
     )
@@ -19,4 +19,4 @@ class Ingredient(models.Model):
         verbose_name_plural = 'Ингредиенты'
 
     def __str__(self):
-        return '{0} {1}'.format(self.title, self.dimension)
+        return '{0}, {1}'.format(self.name, self.dimension)
