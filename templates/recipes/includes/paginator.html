@@ -1,0 +1,11 @@
+<nav class="pagination" aria-label="Search results pages">
+    <ul class="pagination__container">
+        <li class="pagination__item"><a class="pagination__link link" href="#"><span class="icon-left"></span></a></li>
+
+        {% for page_number in paginator.page_range %}
+            <li class="pagination__item {% if items.number == page_number %}pagination__item_active{% endif %}"><a class="pagination__link link" href="#">{{ page_number }}</a></li>
+        {% endfor %}
+
+        <li class="pagination__item"><a class="pagination__link link" href="#"><span class="icon-right"></span></a></li>
+    </ul>
+</nav>

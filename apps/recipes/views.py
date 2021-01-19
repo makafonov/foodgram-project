@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from apps.recipes.mixins import PaginatorMixin
+from apps.recipes.models import Recipe
+
+
+class IndexView(PaginatorMixin, ListView):
+    model = Recipe
+    template_name = 'recipes/index.html'
+    paginate_by = 10

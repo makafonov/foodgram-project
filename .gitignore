@@ -131,6 +131,5 @@ dmypy.json
 .vscode
 .DS_Store
 
-static/admin
-static/recipes
 media
+staticfiles
