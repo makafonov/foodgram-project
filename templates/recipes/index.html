@@ -1,5 +1,4 @@
 {% extends 'recipes/base.html' %}
-
 {% load static %}
 
 {% block content %}
@@ -29,5 +28,25 @@
 {% if page_obj.has_other_pages %}
     {% include 'recipes/includes/paginator.html' with items=page_obj paginator=paginator %}
 {% endif %}
-
 {% endblock content %}
+
+{% block javascript %}
+    <script src="{% static 'recipes/js/components/MainCards.js' %}"></script>
+
+    <script src="{% static 'recipes/js/components/Purchases.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script src="{% static 'recipes/js/components/Favorites.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'recipes/js/config/config.js' %}"></script>
+    <script src="{% static 'recipes/js/components/CardList.js' %}"></script>
+    <script src="{% static 'recipes/js/components/Header.js' %}"></script>
+
+    <script src="{% static 'recipes/js/api/Api.js' %}"></script>
+
+    {% if user.is_authenticated %}
+        <script src="{% static 'recipes/js/indexAuth.js' %}"></script>
+    {% else %}
+        <script src="{% static 'recipes/js/indexNotAuth.js' %}"></script>
+    {% endif %}
+{% endblock javascript %}
+
