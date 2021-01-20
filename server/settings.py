@@ -21,6 +21,7 @@ ALLOWED_HOSTS = [
 # Application definition
 INSTALLED_APPS = [
     'apps.recipes',
+    'apps.users',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -102,3 +103,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+LOGIN_REDIRECT_URL = 'recipes:index'
+LOGOUT_REDIRECT_URL = 'recipes:index'

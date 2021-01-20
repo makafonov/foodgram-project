@@ -1,10 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 from apps.recipes.models.ingredients import Ingredient
 from apps.recipes.models.tags import Tag
-from apps.recipes.models.user import User
 
 _NAME_MAX_LENGTH = 100
+User = get_user_model()
 
 
 class Recipe(models.Model):

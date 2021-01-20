@@ -6,5 +6,5 @@ from apps.recipes.models import Recipe
 
 class IndexView(PaginatorMixin, ListView):
     model = Recipe
-    template_name = 'recipes/index.html'
+    template_name = 'index.html'
     paginate_by = 10

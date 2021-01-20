@@ -1,4 +1,4 @@
-{% extends 'recipes/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
@@ -21,12 +21,12 @@
 </div>
 <div class="card-list">
 {% for recipe in page_obj %}
-    {% include 'recipes/includes/recipe.html' with recipe=recipe %}
+    {% include 'includes/recipe.html' with recipe=recipe %}
 {% endfor %}
 </div>
 
 {% if page_obj.has_other_pages %}
-    {% include 'recipes/includes/paginator.html' with items=page_obj paginator=paginator %}
+    {% include 'includes/paginator.html' with items=page_obj paginator=paginator %}
 {% endif %}
 {% endblock content %}
 

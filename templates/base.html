@@ -9,14 +9,15 @@
     <!-- Title -->
     <title>{% block title %}Рецепты{% endblock %} | Foodgram</title>
 
-    <!-- Загрузка статики -->
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'recipes/css/pages/index.css' %}">
+    {% block css %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'recipes/css/pages/index.css' %}">
+    {% endblock css %}
 </head>
 
 <body class="body">
     <header class="header">
-        {% include 'recipes/includes/nav.html' %}
+        {% include 'includes/nav.html' %}
     </header>
 
     <main class="main container">
@@ -25,7 +26,7 @@
     </main>
 
     <footer class="footer">
-        {% include 'recipes/includes/footer.html' %}
+        {% include 'includes/footer.html' %}
     </footer>
 
     {% block javascript %}
