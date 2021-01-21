@@ -9,3 +9,8 @@
 .nav__item:last-child {
     margin-right: 0;
 }
+
+.nav__item a {
+    display: flex;
+    align-items: center;
+}
