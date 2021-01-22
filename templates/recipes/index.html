@@ -4,12 +4,12 @@
 {% block content %}
 <div class="card-list">
 {% for recipe in page_obj %}
-    {% include 'includes/recipe_card.html' with recipe=recipe %}
+    {% include 'recipes/includes/recipe_card.html' with recipe=recipe %}
 {% endfor %}
 </div>
 
 {% if page_obj.has_other_pages %}
-    {% include 'includes/paginator.html' with items=page_obj paginator=paginator %}
+    {% include 'recipes/includes/paginator.html' with items=page_obj paginator=paginator %}
 {% endif %}
 {% endblock content %}
 

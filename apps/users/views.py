@@ -7,4 +7,4 @@ from apps.users import forms
 class SignUp(CreateView):
     form_class = forms.UserRegistrationForm
     success_url = reverse_lazy('recipes:index')
-    template_name = 'signup.html'
+    template_name = 'registration/signup.html'

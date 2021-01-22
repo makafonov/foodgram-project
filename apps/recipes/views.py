@@ -1,15 +1,32 @@
-from django.views.generic import DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, ListView
 
+from apps.recipes.forms import RecipeForm
 from apps.recipes.mixins import PaginatorMixin
 from apps.recipes.models import Recipe
 
 
 class IndexView(PaginatorMixin, ListView):
     model = Recipe
-    template_name = 'index.html'
+    template_name = 'recipes/index.html'
     paginate_by = 10
 
 
 class RecipeView(DetailView):
     model = Recipe
-    template_name = 'recipe.html'
+    template_name = 'recipes/recipe.html'
+
+
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    """Добавление нового рецепта."""
+
+    model = Recipe
+    template_name = 'recipes/add_recipe.html'
+    form_class = RecipeForm
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.save()
+        return super().form_valid(form)

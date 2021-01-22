@@ -6,6 +6,7 @@ app_name = 'recipes'
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
+    path('new/', views.RecipeCreateView.as_view(), name='new'),
     path(
         '<str:username>/<int:pk>/',
         views.RecipeView.as_view(),

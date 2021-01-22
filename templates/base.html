@@ -6,7 +6,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- Title -->
     <title>{% block title %}Рецепты{% endblock %} | Foodgram</title>
 
     {% load static %}
@@ -26,7 +25,7 @@
                 <h1 class="main__title">{% block header_title %}Рецепты{% endblock header_title %}</h1>
 
                 {% block tags %}
-                    {% include 'includes/tags.html' %}
+                    {% include 'recipes/includes/tags.html' %}
                 {% endblock tags %}
             </div>
         {% endblock header %}
