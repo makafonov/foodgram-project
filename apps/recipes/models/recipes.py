@@ -21,7 +21,6 @@ class Recipe(models.Model):
     cooking_time = models.PositiveIntegerField(
         verbose_name='Время приготовления в минутах',
     )
-    slug = models.SlugField(verbose_name='URL для рецепта', unique=True)
     created_at = models.DateTimeField(
         auto_now_add=True,
         db_index=True,
@@ -44,7 +43,7 @@ class Recipe(models.Model):
     class Meta(object):
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
-        ordering = ('-id', )
+        ordering = ('-created_at', )
 
     def __str__(self):
         return self.name

@@ -9,8 +9,8 @@
     <!-- Title -->
     <title>{% block title %}Рецепты{% endblock %} | Foodgram</title>
 
+    {% load static %}
     {% block css %}
-        {% load static %}
         <link rel="stylesheet" href="{% static 'recipes/css/pages/index.css' %}">
     {% endblock css %}
 </head>
@@ -21,13 +21,15 @@
     </header>
 
     <main class="main container">
-        <div class="main__header">
-            <h1 class="main__title">{% block header %}Рецепты{% endblock header %}</h1>
+        {% block header %}
+            <div class="main__header">
+                <h1 class="main__title">{% block header_title %}Рецепты{% endblock header_title %}</h1>
 
-            {% block tags %}
-                {% include 'includes/tags.html' %}
-            {% endblock tags %}
-        </div>
+                {% block tags %}
+                    {% include 'includes/tags.html' %}
+                {% endblock tags %}
+            </div>
+        {% endblock header %}
 
         {% block content %}
         {% endblock content %}
@@ -36,6 +38,14 @@
     <footer class="footer">
         {% include 'includes/footer.html' %}
     </footer>
+
+    {% block base_javascript %}
+        <script src="{% static 'recipes/js/config/config.js' %}"></script>
+        <script src="{% static 'recipes/js/api/Api.js' %}"></script>
+        <script src="{% static 'recipes/js/components/Purchases.js' %}"></script>
+        <script src="{% static 'recipes/js/components/MainCards.js' %}"></script>
+        <script src="{% static 'recipes/js/components/Header.js' %}"></script>
+    {% endblock base_javascript %}
 
     {% block javascript %}
     {% endblock javascript %}

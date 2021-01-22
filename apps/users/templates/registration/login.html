@@ -7,7 +7,7 @@
 {% endblock css %}
 
 
-{% block header %}Войти на сайт{% endblock %}
+{% block header_title %}Войти на сайт{% endblock %}
 {% block tags %}{% endblock tags %}
 {% block content %}
 {% load user_filters %}
@@ -36,5 +36,6 @@
         </div>
     </form>
 </div>
-
 {% endblock %}
+
+{% block base_javascript %}{% endblock base_javascript %}

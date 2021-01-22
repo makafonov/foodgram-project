@@ -31,7 +31,6 @@ class RecipeAdmin(admin.ModelAdmin):
         'name',
         'text',
         'cooking_time',
-        'slug',
     )
     exclude = ('tags',)
     inlines = (TagInline, IngredientsInline)

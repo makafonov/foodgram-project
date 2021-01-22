@@ -7,7 +7,7 @@
 {% endblock css %}
 
 
-{% block header %}Регистрация{% endblock header %}
+{% block header_title %}Регистрация{% endblock %}
 {% block tags %}{% endblock tags %}
 {% block content %}
 {% load user_filters %}
@@ -34,5 +34,6 @@
         </div>
     </form>
 </div>
-
 {% endblock %}
+
+{% block base_javascript %}{% endblock base_javascript %}

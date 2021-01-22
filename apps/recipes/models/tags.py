@@ -4,9 +4,9 @@ _TAG_MAX_LENGTH = 10
 
 
 class TagChoices(models.TextChoices):
-    BREAKFAST = 'завтрак', 'Завтрак'  # noqa: WPS115
-    LUNCH = 'обед', 'Обед'  # noqa: WPS115
-    DINNER = 'ужин', 'Ужин'  # noqa: WPS115
+    BREAKFAST = 'green', 'Завтрак'  # noqa: WPS115
+    LUNCH = 'orange', 'Обед'  # noqa: WPS115
+    DINNER = 'purple', 'Ужин'  # noqa: WPS115
 
 
 class Tag(models.Model):

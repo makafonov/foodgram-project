@@ -1,25 +1,18 @@
 <div class="card" data-id="120">
-    <a href="#" class="link" target="_blank">
+    <a href="{% url 'recipes:recipe' username=recipe.author.username pk=recipe.id%}" class="link" target="_blank">
 
         {% load thumbnail %}
-
         {% thumbnail recipe.image "1000x500" crop="center" upscale=False as im %}
-                <img src="{{ im.url }}" alt="{{ recipe.name }}" class="card__image">
+            <img src="{{ im.url }}" alt="{{ recipe.name }}" class="card__image">
         {% endthumbnail %}
     </a>
 
-
-    {% comment %}
-    width="{{ im.width }}" height="{{ im.height }}"
-    {% endcomment %}
-
-
     <div class="card__body">
-        <a class="card__title link" href="#" target="_blank">{{ recipe.name }}</a>
+        <a class="card__title link" href="{% url 'recipes:recipe' username=recipe.author.username pk=recipe.id%}" target="_blank">{{ recipe.name }}</a>
         <ul class="card__items">
-            <li class="card__item"><span class="badge badge_style_green">Обед</span></li>
-            <li class="card__item"><span class="badge badge_style_orange">Завтрак</span></li>
-            <li class="card__item"><span class="badge badge_style_purple">Ужин</span></li>
+            {% for tag in recipe.tags.all %}
+                <li class="card__item"><span class="badge badge_style_{{ tag }}">{{ tag.get_description_display }}</span></li>
+            {% endfor %}
         </ul>
         <div class="card__items card__items_column">
             <p class="card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
