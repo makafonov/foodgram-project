@@ -31,10 +31,20 @@
         </ul>
         <div class="single-card__items single-card__items_column">
             <p class="single-card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
-            <p class="single-card__text"><span class="icon-user"></span> {{ recipe.author.username }}</p>
+            {% if user.is_authenticated %}
+                <ul class="single-card__items">
+                    <li class="single-card__item"><p class="single-card__text"><span class="icon-user"></span> {{ recipe.author.username }}</p></li>
+                    <li class="single-card__item">  <a style="margin-left: 2.5em" href="#" class="single-card__text">Редактировать рецепт</a></li>
+                </ul>
+            {% else %}
+                <p class="single-card__text"><span class="icon-user"></span> {{ recipe.author.username }}</p>
+            {% endif %}
         </div>
         <ul class="single-card__items">
             <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span> Добавить в покупки</button></li>
+            {% if user.is_authenticated %}
+                <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></li>
+            {% endif %}
         </ul>
         <div class="single-card__section">
             <h3 class="single-card__section-title">Ингридиенты:</h3>
