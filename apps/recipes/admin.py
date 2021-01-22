@@ -27,10 +27,11 @@ class IngredientsInline(admin.TabularInline):
 
 @admin.register(models.Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = (
-        'name',
-        'text',
-        'cooking_time',
-    )
-    exclude = ('tags',)
+    list_display = ('name', 'text', 'cooking_time')
+    exclude = ('tags', )
     inlines = (TagInline, IngredientsInline)
+
+
+@admin.register(models.Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ('user', 'recipe')

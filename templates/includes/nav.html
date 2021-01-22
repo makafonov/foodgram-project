@@ -1,5 +1,6 @@
 {% url 'recipes:index' as index %}
 {% url 'recipes:new' as new %}
+{% url 'recipes:favorites' as favorites %}
 {% url 'login' as url_login %}
 {% url 'signup' as url_signup %}
 {% url 'password_reset' as url_password_reset %}
@@ -17,9 +18,11 @@
             {% if user.is_authenticated %}
                 <li class="nav__item"><a href="#" class="nav__link link">Мои подписки</a></li>
                 <li class="nav__item
-                {% if request.path == new %}nav__item_active{% endif %}
-                "><a href="{{ new }}" class="nav__link link">Создать рецепт</a></li>
-                <li class="nav__item"><a href="#" class="nav__link link">Избранное</a></li>
+                    {% if request.path == new %}nav__item_active{% endif %}
+                    "><a href="{{ new }}" class="nav__link link">Создать рецепт</a></li>
+                <li class="nav__item
+                    {% if request.path == favorites %}nav__item_active{% endif %}
+                    "><a href="{{ favorites }}" class="nav__link link">Избранное</a></li>
             {% endif %}
             <li class="nav__item
                 {% if request.path == url_login or request.path == url_signup or request.path == url_password_reset %}nav__item_disabled{% endif %}
