@@ -2,8 +2,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic.list import MultipleObjectMixin
 
 from apps.recipes.forms import RecipeForm
+from apps.recipes.mixins import UserIsFollowerMixin
 from apps.recipes.models import Recipe
 
 User = get_user_model()
@@ -12,7 +14,7 @@ User = get_user_model()
 class IndexView(ListView):
     model = Recipe
     template_name = 'recipes/index.html'
-    paginate_by = 10
+    paginate_by = 9
 
 
 class RecipeView(DetailView):
@@ -37,7 +39,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 class FavoriteView(LoginRequiredMixin, ListView):
     model = Recipe
     template_name = 'recipes/favorites.html'
-    paginate_by = 10
+    paginate_by = 9
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -47,8 +49,21 @@ class FavoriteView(LoginRequiredMixin, ListView):
 class FollowView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'recipes/follow.html'
-    paginate_by = 10
+    paginate_by = 9
 
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(following__user=self.request.user)
+
+
+class ProfileView(UserIsFollowerMixin, DetailView, MultipleObjectMixin):
+    model = User
+    template_name = 'recipes/profile.html'
+    paginate_by = 6
+    context_object_name = 'profile_user'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+
+    def get_context_data(self, **kwargs):
+        object_list = Recipe.objects.filter(author=self.get_object())
+        return super().get_context_data(object_list=object_list, **kwargs)

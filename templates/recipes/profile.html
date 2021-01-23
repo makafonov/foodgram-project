@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Рецепты{% endblock %}
+
+{% block header_title %}{{ profile_user.get_full_name|default:profile_user.username }}{% endblock header_title %}
+{% block content %}
+    {% if not following and user.is_authenticated and user != profile_user %}
+        <div class="author-subscribe" data-author="{{ object.pk }}">
+            <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
+        </div>
+    {% endif %}
+
+    <div class="card-list">
+        {% for recipe in page_obj %}
+            {% include 'recipes/includes/recipe_card.html' with recipe=recipe %}
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+        {% include 'recipes/includes/paginator.html' with items=page_obj paginator=paginator %}
+    {% endif %}
+{% endblock content %}
+
+{% block javascript %}
+    <script src="{% static 'recipes/js/components/Favorites.js' %}"></script>
+    <script src="{% static 'recipes/js/components/Subscribe.js' %}"></script>
+    <script src="{% static 'recipes/js/components/AuthorRecipe.js' %}"></script>
+    <script src="{% static 'recipes/js/authorRecipe.js' %}"></script>
+{% endblock javascript %}
