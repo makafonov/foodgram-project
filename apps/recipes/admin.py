@@ -35,3 +35,8 @@ class RecipeAdmin(admin.ModelAdmin):
 @admin.register(models.Favorite)
 class FavoriteAdmin(admin.ModelAdmin):
     list_display = ('user', 'recipe')
+
+
+@admin.register(models.Follow)
+class FollowAdmin(admin.ModelAdmin):
+    list_display = ('user', 'author')

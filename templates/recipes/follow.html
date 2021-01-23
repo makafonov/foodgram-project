@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Мои подписки{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'recipes/css/pages/myFollow.css' %}">{% endblock css %}
+
+{% block header_title %}Мои подписки{% endblock header_title %}
+{% block tags %}{% endblock tags %}
+{% block content %}
+    <div class="card-list">
+        {% for author in object_list %}
+            {% include 'recipes/includes/author_card.html' with author=author %}
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+        {% include 'recipes/includes/paginator.html' with items=page_obj paginator=paginator %}
+    {% endif %}
+{% endblock content %}
+
+{% block javascript %}
+    <script src="{% static 'recipes/js/components/MyFollow.js' %}"></script>
+    <script src="{% static 'recipes/js/components/Subscribe.js' %}"></script>
+    <script src="{% static 'recipes/js/myFollow.js' %}"></script>
+{% endblock javascript %}
+
