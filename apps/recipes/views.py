@@ -23,8 +23,6 @@ class RecipeView(DetailView):
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
-    """Добавление нового рецепта."""
-
     model = Recipe
     template_name = 'recipes/add_recipe.html'
     form_class = RecipeForm
@@ -67,3 +65,12 @@ class ProfileView(UserIsFollowerMixin, DetailView, MultipleObjectMixin):
     def get_context_data(self, **kwargs):
         object_list = Recipe.objects.filter(author=self.get_object())
         return super().get_context_data(object_list=object_list, **kwargs)
+
+
+class PurchaseView(LoginRequiredMixin, ListView):
+    model = Recipe
+    template_name = 'recipes/purchases.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(purchases__user=self.request.user)

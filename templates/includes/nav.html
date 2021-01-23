@@ -2,6 +2,7 @@
 {% url 'recipes:new' as new %}
 {% url 'recipes:favorites' as favorites %}
 {% url 'recipes:follow' as follow %}
+{% url 'recipes:purchases' as purchases %}
 {% url 'login' as url_login %}
 {% url 'signup' as url_signup %}
 {% url 'password_reset' as url_password_reset %}
@@ -29,7 +30,8 @@
             {% endif %}
             <li class="nav__item
                 {% if request.path == url_login or request.path == url_signup or request.path == url_password_reset %}nav__item_disabled{% endif %}
-                "><a href="#" class="nav__link link">Список покупок</a>
+                {% if request.path == purchases %}nav__item_active{% endif %}
+                "><a href="{{ purchases }}" class="nav__link link">Список покупок</a>
                 <span class="badge badge_style_blue nav__badge" id="counter">4</span>
             </li>
         </ul>

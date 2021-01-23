@@ -40,3 +40,8 @@ class FavoriteAdmin(admin.ModelAdmin):
 @admin.register(models.Follow)
 class FollowAdmin(admin.ModelAdmin):
     list_display = ('user', 'author')
+
+
+@admin.register(models.Purchase)
+class PurchaseAdmin(admin.ModelAdmin):
+    list_display = ('user', 'recipe')

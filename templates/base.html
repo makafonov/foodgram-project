@@ -9,15 +9,11 @@
     <title>{% block title %}Рецепты{% endblock %} | Foodgram</title>
 
     {% load static %}
-    {% block css %}
-        <link rel="stylesheet" href="{% static 'recipes/css/pages/index.css' %}">
-    {% endblock css %}
+    {% block css %}<link rel="stylesheet" href="{% static 'recipes/css/pages/index.css' %}">{% endblock css %}
 </head>
 
 <body class="body">
-    <header class="header">
-        {% include 'includes/nav.html' %}
-    </header>
+    <header class="header">{% include 'includes/nav.html' %}</header>
 
     <main class="main container">
         {% block header %}
@@ -34,9 +30,7 @@
         {% endblock content %}
     </main>
 
-    <footer class="footer">
-        {% include 'includes/footer.html' %}
-    </footer>
+    <footer class="footer">{% include 'includes/footer.html' %}</footer>
 
     {% block base_javascript %}
         <script src="{% static 'recipes/js/config/config.js' %}"></script>
