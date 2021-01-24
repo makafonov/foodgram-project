@@ -27,6 +27,12 @@ class Favorite(models.Model):
 
         verbose_name = 'Избранное'
         verbose_name_plural = 'Избранные'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'],
+                name='unique_favorite_user_recipe',
+            ),
+        ]
 
     def __str__(self):
         """Unicode representation of Favorite."""
