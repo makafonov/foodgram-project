@@ -1,4 +1,4 @@
-<div class="card" data-id="120">
+<div class="card" data-id="{{ recipe.pk }}">
     <a href="{% url 'recipes:recipe' username=recipe.author.username pk=recipe.id %}" class="link" target="_blank">
 
         {% load thumbnail %}
@@ -21,8 +21,6 @@
     </div>
     <div class="card__footer">
         <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
-        {% if user.is_authenticated %}
-            <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
-        {% endif %}
+        {% include 'recipes/includes/button_favorite.html' %}
     </div>
 </div>
