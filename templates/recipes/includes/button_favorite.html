@@ -1,7 +1,6 @@
-{% load user_filters %}
+{% url 'recipes:favorites' as favorites %}
 {% if user.is_authenticated %}
-    {% is_favorite as is_favorite_flag %}
-    {% if is_favorite_flag %}
+    {% if recipe.is_favorite or request.path == favorites %}
         <button class="button button_style_none" name="favorites">
             <span class="icon-favorite icon-favorite_active"></span>
         </button>

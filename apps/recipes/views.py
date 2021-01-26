@@ -1,12 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import BooleanField, Exists, OuterRef, Value
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.list import MultipleObjectMixin
 
 from apps.recipes.forms import RecipeForm
 from apps.recipes.mixins import UserIsFollowerMixin
-from apps.recipes.models import Recipe
+from apps.recipes.models import Favorite, Recipe
 
 User = get_user_model()
 
@@ -15,6 +16,19 @@ class IndexView(ListView):
     model = Recipe
     template_name = 'recipes/index.html'
     paginate_by = 9
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        if self.request.user.is_authenticated:
+            queryset = queryset.annotate(
+                is_favorite=Exists(
+                    Favorite.objects.filter(
+                        user=self.request.user, recipe=OuterRef('pk')
+                    ),
+                ),
+            )
+        return queryset
 
 
 class RecipeView(DetailView):
