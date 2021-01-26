@@ -51,7 +51,9 @@ class FollowView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(following__user=self.request.user)
+        return queryset.filter(
+            following__user=self.request.user,
+        ).order_by('-id')
 
 
 class ProfileView(UserIsFollowerMixin, DetailView, MultipleObjectMixin):
