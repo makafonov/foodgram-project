@@ -4,6 +4,7 @@
 
 {% block header_title %}{{ profile_user.get_full_name|default:profile_user.username }}{% endblock header_title %}
 {% block content %}
+{% csrf_token %}
     {% if not following and user.is_authenticated and user != profile_user %}
         <div class="author-subscribe" data-author="{{ object.pk }}">
             <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
