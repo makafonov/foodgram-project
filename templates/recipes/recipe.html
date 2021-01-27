@@ -8,7 +8,7 @@
 {% block header %}{% endblock %}
 {% block content %}
 {% csrf_token %}
-<div class="single-card" data-id="{{ recipe.id }}">
+<div class="single-card" data-id="{{ recipe.id }}" data-author="{{ recipe.author.id }}">
     {% load thumbnail %}
     {% thumbnail recipe.image "500x500" crop="center" upscale=True as im %}
         <img src="{{ im.url }}" alt="{{ recipe.name }}" class="single-card__image">
@@ -36,9 +36,7 @@
         </div>
         <ul class="single-card__items">
             <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span> Добавить в покупки</button></li>
-            {% if user.is_authenticated %}
-                <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></li>
-            {% endif %}
+            {% include 'recipes/includes/button_subscribe.html' with author=recipe.author %}
         </ul>
         <div class="single-card__section">
             <h3 class="single-card__section-title">Ингридиенты:</h3>

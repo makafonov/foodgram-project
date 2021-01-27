@@ -48,10 +48,11 @@ class Api {
       })
   }
   addSubscriptions(id) {
-    return fetch(`/subscriptions`, {
+    return fetch(`${this.apiUrl}/subscriptions/`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
       },
       body: JSON.stringify({
         id: id
@@ -65,10 +66,11 @@ class Api {
       })
   }
   removeSubscriptions (id) {
-    return fetch(`/subscriptions/${id}`, {
+    return fetch(`${this.apiUrl}/subscriptions/${id}/`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
       }
     })
       .then( e => {

@@ -6,6 +6,7 @@
 {% block header_title %}Мои подписки{% endblock header_title %}
 {% block tags %}{% endblock tags %}
 {% block content %}
+{% csrf_token %}
     <div class="card-list">
         {% for author in object_list %}
             {% include 'recipes/includes/author_card.html' with author=author %}

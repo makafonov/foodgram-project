@@ -1,12 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import BooleanField, Exists, OuterRef, Value
+from django.db.models import Exists, OuterRef
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.list import MultipleObjectMixin
 
 from apps.recipes.forms import RecipeForm
-from apps.recipes.mixins import UserIsFollowerMixin
 from apps.recipes.models import Favorite, Recipe
 
 User = get_user_model()
@@ -24,7 +23,8 @@ class IndexView(ListView):
             queryset = queryset.annotate(
                 is_favorite=Exists(
                     Favorite.objects.filter(
-                        user=self.request.user, recipe=OuterRef('pk')
+                        user=self.request.user,
+                        recipe=OuterRef('pk'),
                     ),
                 ),
             )
@@ -70,7 +70,7 @@ class FollowView(LoginRequiredMixin, ListView):
         ).order_by('-id')
 
 
-class ProfileView(UserIsFollowerMixin, DetailView, MultipleObjectMixin):
+class ProfileView(DetailView, MultipleObjectMixin):
     model = User
     template_name = 'recipes/profile.html'
     paginate_by = 6
@@ -81,6 +81,17 @@ class ProfileView(UserIsFollowerMixin, DetailView, MultipleObjectMixin):
     def get_context_data(self, **kwargs):
         object_list = Recipe.objects.filter(author=self.get_object())
         return super().get_context_data(object_list=object_list, **kwargs)
+
+    @property
+    def extra_context(self):
+        """Флаг user_is_follower. Является ли пользователь подписчиком."""
+        author = User.objects.get(username=self.kwargs['username'])
+
+        is_follower = False
+        if self.request.user.is_authenticated:
+            if self.request.user.follower.filter(author=author).exists():
+                is_follower = True
+        return {'user_is_follower': is_follower}
 
 
 class PurchaseView(LoginRequiredMixin, ListView):
