@@ -26,6 +26,7 @@
             </div>
         {% endblock header %}
 
+        {% csrf_token %}
         {% block content %}
         {% endblock content %}
     </main>

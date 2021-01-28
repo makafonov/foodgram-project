@@ -4,8 +4,6 @@
 
 {% block header_title %}{{ profile_user.get_full_name|default:profile_user.username }}{% endblock header_title %}
 {% block content %}
-{% csrf_token %}
-
 {% if user.is_authenticated and user != profile_user %}
     {% if user_is_follower %}
         <div class="author-subscribe" data-author="{{ object.pk }}">
