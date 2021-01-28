@@ -4,9 +4,10 @@ class Api {
         this.apiUrl =  apiUrl;
     }
   getPurchases () {
-    return fetch(`/purchases`, {
+    return fetch(`${this.apiUrl}/purchases/`, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
       }
     })
       .then( e => {
@@ -17,10 +18,11 @@ class Api {
       })
   }
   addPurchases (id) {
-    return fetch(`/purchases`, {
+    return fetch(`${this.apiUrl}/purchases/`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
       },
       body: JSON.stringify({
         id: id
@@ -34,10 +36,11 @@ class Api {
       })
   }
   removePurchases (id){
-    return fetch(`/purchases/${id}`, {
+    return fetch(`${this.apiUrl}/purchases/${id}/`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
       }
     })
       .then( e => {
