@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Exists, OuterRef
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.list import MultipleObjectMixin
@@ -8,6 +9,8 @@ from django.views.generic.list import MultipleObjectMixin
 from apps.recipes.forms import RecipeForm
 from apps.recipes.models import Favorite, Recipe
 
+_HTTP404 = 404
+_HTTP500 = 500
 User = get_user_model()
 
 
@@ -101,3 +104,16 @@ class PurchaseView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(purchases__user=self.request.user)
+
+
+def page_not_found(request, exception):
+    return render(
+        request,
+        'misc/404.html',
+        {'path': request.path},
+        status=_HTTP404,
+    )
+
+
+def server_error(request):
+    return render(request, 'misc/500.html', status=_HTTP500)
