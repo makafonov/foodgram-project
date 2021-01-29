@@ -34,7 +34,11 @@
             {% endif %}
         </div>
         <ul class="single-card__items">
-            <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span> Добавить в покупки</button></li>
+            {% load user_filters %}
+            {% is_purchase as is_purchase_flag %}
+            <li class="single-card__item">
+                {% include 'recipes/includes/button_purchase.html' with flag=is_purchase_flag %}
+            </li>
             {% include 'recipes/includes/button_subscribe.html' with author=recipe.author %}
         </ul>
         <div class="single-card__section">

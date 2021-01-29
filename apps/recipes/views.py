@@ -7,7 +7,7 @@ from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.list import MultipleObjectMixin
 
 from apps.recipes.forms import RecipeForm
-from apps.recipes.models import Favorite, Recipe
+from apps.recipes.models import Favorite, Purchase, Recipe
 
 _HTTP404 = 404
 _HTTP500 = 500
@@ -26,6 +26,13 @@ class IndexView(ListView):
             queryset = queryset.annotate(
                 is_favorite=Exists(
                     Favorite.objects.filter(
+                        user=self.request.user,
+                        recipe=OuterRef('pk'),
+                    ),
+                ),
+            ).annotate(
+                is_purchase=Exists(
+                    Purchase.objects.filter(
                         user=self.request.user,
                         recipe=OuterRef('pk'),
                     ),
@@ -104,6 +111,11 @@ class PurchaseView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(purchases__user=self.request.user)
+
+
+def get_purchases_count(request):
+    purchases = Purchase.objects.filter(user=request.user).count()
+    return {'user_purchases_count': purchases}
 
 
 def page_not_found(request, exception):

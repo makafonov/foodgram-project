@@ -1,6 +1,6 @@
 from django import template
 
-from apps.recipes.models import Favorite, Follow
+from apps.recipes.models import Favorite, Follow, Purchase
 
 register = template.Library()
 
@@ -23,4 +23,12 @@ def is_follower(context):
     return Follow.objects.filter(
         user=context['user'],
         author=context['author'],
+    ).exists()
+
+
+@register.simple_tag(takes_context=True)
+def is_purchase(context):
+    return Purchase.objects.filter(
+        user=context['user'],
+        recipe=context['recipe'],
     ).exists()

@@ -27,6 +27,12 @@ class Purchase(models.Model):
 
         verbose_name = 'Покупка'
         verbose_name_plural = 'Покупки'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'],
+                name='unique_purchase_user_recipe',
+            ),
+        ]
 
     def __str__(self):
         """Unicode representation of Purchase."""
