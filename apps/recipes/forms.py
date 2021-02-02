@@ -4,6 +4,12 @@ from apps.recipes.models import Recipe, Tag
 
 
 class RecipeForm(forms.ModelForm):
+    tags = forms.ModelMultipleChoiceField(
+        label='Теги',
+        queryset=Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
     class Meta(object):
         model = Recipe
         fields = (
@@ -14,9 +20,12 @@ class RecipeForm(forms.ModelForm):
             'text',
             'image',
         )
-        widgets = {'tags': forms.CheckboxSelectMultiple()}
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['cooking_time'].label = 'Время приготовления'
-        self.fields['image'].label = 'Загрузить фото'
+        labels = {
+            'name': 'Название рецепта',
+            'cooking_time': 'Время приготовления',
+            'image': 'Загрузить фото',
+        }
+        widgets = {
+            'cooking_time': forms.TextInput(),
+            'ingredients': forms.TextInput(attrs={'id': 'nameIngredient'}),
+        }
