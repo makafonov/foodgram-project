@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from apps.recipes.models import Favorite, Follow, Purchase, Recipe
+from apps.recipes.models import Favorite, Follow, Ingredient, Purchase, Recipe
 
 User = get_user_model()
 
@@ -40,3 +40,11 @@ class PurchaseSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Purchase
         fields = ('user', 'id')
+
+
+class IngredientSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(source='name')
+
+    class Meta(object):
+        model = Ingredient
+        fields = ('title', 'dimension')

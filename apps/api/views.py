@@ -1,15 +1,11 @@
 import types
 
 from django.shortcuts import get_object_or_404
-from rest_framework import mixins, viewsets
+from rest_framework import filters, mixins, viewsets
 from rest_framework.response import Response
 
-from apps.api.serializer import (
-    FavoriteSerializer,
-    FollowSerializer,
-    PurchaseSerializer,
-)
-from apps.recipes.models import Favorite, Follow, Purchase
+from apps.api import serializers
+from apps.recipes.models import Favorite, Follow, Ingredient, Purchase
 
 _SUCCESS_RESPONSE = types.MappingProxyType({'success': True})
 _UNSUCCESS_RESPONSE = types.MappingProxyType({'success': False})
@@ -37,7 +33,7 @@ class BaseInstanceView(
 
 class FavoriteApiView(BaseInstanceView):
     queryset = Favorite.objects.all()
-    serializer_class = FavoriteSerializer
+    serializer_class = serializers.FavoriteSerializer
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -52,7 +48,7 @@ class FavoriteApiView(BaseInstanceView):
 
 class FollowApiView(BaseInstanceView):
     queryset = Follow.objects.all()
-    serializer_class = FollowSerializer
+    serializer_class = serializers.FollowSerializer
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -67,7 +63,7 @@ class FollowApiView(BaseInstanceView):
 
 class PurchaseApiView(mixins.ListModelMixin, BaseInstanceView):
     queryset = Purchase.objects.all()
-    serializer_class = PurchaseSerializer
+    serializer_class = serializers.PurchaseSerializer
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -78,3 +74,10 @@ class PurchaseApiView(mixins.ListModelMixin, BaseInstanceView):
         )
         self.check_object_permissions(self.request, instance)
         return instance
+
+
+class IgredientApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Ingredient.objects.all()
+    serializer_class = serializers.IngredientSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ('name',)
