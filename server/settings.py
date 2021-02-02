@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'sorl.thumbnail',
+    'django_filters',
     'rest_framework',
 ]
 

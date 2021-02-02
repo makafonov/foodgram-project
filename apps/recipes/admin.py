@@ -10,7 +10,7 @@ class IngredientAdmin(admin.ModelAdmin):
 
 @admin.register(models.Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('description', )
+    list_display = ('name', 'color')
 
 
 class TagInline(admin.TabularInline):

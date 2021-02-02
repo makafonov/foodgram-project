@@ -5,7 +5,9 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.list import MultipleObjectMixin
+from django_filters.views import BaseFilterView
 
+from apps.recipes.filters import TagFilterSet
 from apps.recipes.forms import RecipeForm
 from apps.recipes.models import Favorite, Purchase, Recipe
 
@@ -14,10 +16,11 @@ _HTTP500 = 500
 User = get_user_model()
 
 
-class IndexView(ListView):
+class IndexView(BaseFilterView, ListView):
     model = Recipe
     template_name = 'recipes/index.html'
-    paginate_by = 9
+    paginate_by = 6
+    filterset_class = TagFilterSet
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -40,6 +43,10 @@ class IndexView(ListView):
             )
         return queryset
 
+    @property
+    def extra_context(self):
+        return {'tags': self.request.GET.getlist('tags')}
+
 
 class RecipeView(DetailView):
     model = Recipe
@@ -61,7 +68,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 class FavoriteView(LoginRequiredMixin, ListView):
     model = Recipe
     template_name = 'recipes/favorites.html'
-    paginate_by = 9
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -71,7 +78,7 @@ class FavoriteView(LoginRequiredMixin, ListView):
 class FollowView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'recipes/follow.html'
-    paginate_by = 9
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = super().get_queryset()
