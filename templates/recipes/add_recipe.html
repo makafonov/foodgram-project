@@ -21,8 +21,8 @@
                         <div class="tags">
                             {% for tag in form.fields.tags.choices.queryset %}
                                 <div class="tags__item">
-                                    <input type="checkbox" name="{{ tag.name }}" id="id_{{ tag.name }}" class="tags__checkbox tags__checkbox_style_{{ tag.color }}">
-                                    <label for="id_{{ tag.name }}" class="tags__label">{{ tag.get_name_display }}</label>
+                                    <input type="checkbox" name="tags" value="{{ tag.pk }}" id="id_tags_{{ forloop.counter }}" class="tags__checkbox tags__checkbox_style_{{ tag.color }}">
+                                    <label for="id_tags_{{ forloop.counter }}" class="tags__label">{{ tag.get_name_display }}</label>
                                 </div>
                             {% endfor %}
                         </div>
@@ -37,7 +37,6 @@
                         </div>
                         <div class="form__field-group-ingredientes-container"></div>
                         <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
-                        <span class="form__error"></span>
                     {% elif field.name == 'text' %}
                         {{ field|addclass:"form__textarea" }}
                     {% elif field.name == 'cooking_time' %}

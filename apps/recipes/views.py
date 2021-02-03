@@ -1,15 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Exists, OuterRef
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.list import MultipleObjectMixin
 from django_filters.views import BaseFilterView
 
 from apps.recipes.filters import TagFilterSet
 from apps.recipes.forms import RecipeForm
-from apps.recipes.models import Favorite, Purchase, Recipe
+from apps.recipes.models import Favorite, Ingredient, Purchase, Recipe
 
 _HTTP404 = 404
 _HTTP500 = 500
@@ -57,12 +56,32 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
     template_name = 'recipes/add_recipe.html'
     form_class = RecipeForm
-    success_url = reverse_lazy('index')
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        form.save()
-        return super().form_valid(form)
+        recipe = form.save(commit=False)
+        recipe.author = self.request.user
+        recipe.save()
+        ingredients = form.cleaned_data['ingredients']
+        form.cleaned_data['ingredients'] = []
+        form.save_m2m()
+
+        Recipe.ingredients.through.objects.bulk_create(
+            [
+                Recipe.ingredients.through(
+                    recipe=recipe,
+                    ingredient=get_object_or_404(
+                        Ingredient,
+                        name=ingredient['name'],
+                    ),
+                    amount=ingredient['amount'],
+                ) for ingredient in ingredients
+            ],
+        )
+        return redirect(
+            'recipes:recipe',
+            username=recipe.author.username,
+            pk=recipe.pk,
+        )
 
 
 class FavoriteView(LoginRequiredMixin, ListView):
@@ -82,7 +101,7 @@ class FollowView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(
+        return queryset.filter(  # yapf: disable
             following__user=self.request.user,
         ).order_by('-id')
 
@@ -101,7 +120,7 @@ class ProfileView(DetailView, MultipleObjectMixin):
 
     @property
     def extra_context(self):
-        """Флаг user_is_follower. Является ли пользователь подписчиком."""
+        """Flag user_is_follower."""
         author = User.objects.get(username=self.kwargs['username'])
 
         is_follower = False
@@ -121,6 +140,7 @@ class PurchaseView(LoginRequiredMixin, ListView):
 
 
 def get_purchases_count(request):
+    """Custom template tag for amount of purchases."""
     purchases = Purchase.objects.filter(user=request.user).count()
     return {'user_purchases_count': purchases}
 
