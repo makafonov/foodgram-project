@@ -32,3 +32,12 @@ def is_purchase(context):
         user=context['user'],
         recipe=context['recipe'],
     ).exists()
+
+
+@register.simple_tag(takes_context=True)
+def param_replace(context, **kwargs):
+    query_string = context['request'].GET.copy()
+    if 'page' in kwargs:
+        query_string['page'] = kwargs.get('page')
+
+    return query_string.urlencode()
