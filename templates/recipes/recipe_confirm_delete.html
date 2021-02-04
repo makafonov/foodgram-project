@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}{% endblock %}
+{% block content %}
+    <div class="custom-center-block">
+            <p class="custom-text-block">Вы действительно хотите удалить рецепт "{{ object }}"?</p>
+        <div class="custom-button-block">
+            <form method="post">{% csrf_token %}
+                <button class="button button_style_blue" type="submit">Да</button>
+            </form>
+            <form method="get" action="{% url 'recipes:index' %}">
+                <button class="button button_style_blue" style="margin-left: 1.5em" type="submit">Перейти на главную</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

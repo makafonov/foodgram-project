@@ -2,7 +2,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Exists, OuterRef
 from django.shortcuts import redirect, render
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 from django.views.generic.list import MultipleObjectMixin
 from django_filters.views import BaseFilterView
 
@@ -97,6 +104,16 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
             username=recipe.author.username,
             pk=recipe.pk,
         )
+
+
+class RecipeDeleteView(DeleteView):
+    model = Recipe
+    success_url = reverse_lazy('recipes:index')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        print(queryset)
+        return queryset
 
 
 class FavoriteView(LoginRequiredMixin, ListView):
