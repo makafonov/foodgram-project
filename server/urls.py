@@ -4,8 +4,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-handler404 = 'apps.recipes.views.page_not_found'  # noqa
-handler500 = 'apps.recipes.views.server_error'  # noqa
+handler404 = 'apps.recipes.views.page_not_found'  # noqa: WPS440, F811
+handler500 = 'apps.recipes.views.server_error'  # noqa: WPS440, F811
 
 urlpatterns = [
     path('auth/', include('apps.users.urls')),

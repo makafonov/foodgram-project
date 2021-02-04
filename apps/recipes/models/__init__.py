@@ -1,3 +1,4 @@
+# flake8: noqa
 from apps.recipes.models.favorites import Favorite
 from apps.recipes.models.follow import Follow
 from apps.recipes.models.ingredients import Ingredient
