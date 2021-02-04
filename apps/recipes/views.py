@@ -1,14 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Exists, OuterRef
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import CreateView, DetailView, ListView
+from django.shortcuts import redirect, render
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.views.generic.list import MultipleObjectMixin
 from django_filters.views import BaseFilterView
 
 from apps.recipes.filters import TagFilterSet
 from apps.recipes.forms import RecipeForm
-from apps.recipes.models import Favorite, Ingredient, Purchase, Recipe, Tag
+from apps.recipes.models import Favorite, Purchase, Recipe, Tag
+from apps.recipes.services import add_ingredients_to_recipe
 
 _HTTP404 = 404
 _HTTP500 = 500
@@ -67,19 +68,30 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         ingredients = form.cleaned_data['ingredients']
         form.cleaned_data['ingredients'] = []
         form.save_m2m()
+        add_ingredients_to_recipe(recipe, ingredients)
 
-        Recipe.ingredients.through.objects.bulk_create(
-            [
-                Recipe.ingredients.through(
-                    recipe=recipe,
-                    ingredient=get_object_or_404(
-                        Ingredient,
-                        name=ingredient['name'],
-                    ),
-                    amount=ingredient['amount'],
-                ) for ingredient in ingredients
-            ],
+        return redirect(
+            'recipes:recipe',
+            username=recipe.author.username,
+            pk=recipe.pk,
         )
+
+
+class RecipeUpdateView(LoginRequiredMixin, UpdateView):
+    model = Recipe
+    template_name = 'recipes/add_recipe.html'
+    form_class = RecipeForm
+    extra_context = {'is_created': True}
+
+    def form_valid(self, form):
+        recipe = form.save(commit=False)
+        recipe.ingredients.clear()
+        ingredients = form.cleaned_data['ingredients']
+        form.cleaned_data['ingredients'] = []
+        recipe.save()
+        form.save_m2m()
+        add_ingredients_to_recipe(recipe, ingredients)
+
         return redirect(
             'recipes:recipe',
             username=recipe.author.username,

@@ -16,4 +16,9 @@ urlpatterns = [
         views.RecipeView.as_view(),
         name='recipe',
     ),
+    path(
+        '<str:username>/<int:pk>/edit/',
+        views.RecipeUpdateView.as_view(),
+        name='recipe_edit',
+    ),
 ]
