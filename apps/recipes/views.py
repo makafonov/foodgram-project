@@ -8,7 +8,7 @@ from django_filters.views import BaseFilterView
 
 from apps.recipes.filters import TagFilterSet
 from apps.recipes.forms import RecipeForm
-from apps.recipes.models import Favorite, Ingredient, Purchase, Recipe
+from apps.recipes.models import Favorite, Ingredient, Purchase, Recipe, Tag
 
 _HTTP404 = 404
 _HTTP500 = 500
@@ -44,7 +44,10 @@ class IndexView(BaseFilterView, ListView):
 
     @property
     def extra_context(self):
-        return {'tags': self.request.GET.getlist('tags')}
+        return {
+            'active_tags': self.request.GET.getlist('tags'),
+            'tags': Tag.objects.all(),
+        }
 
 
 class RecipeView(DetailView):
