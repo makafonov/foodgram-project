@@ -58,3 +58,8 @@ def manage_tags(context, **kwargs):
         query_string.pop('page')
 
     return query_string.urlencode()
+
+
+@register.simple_tag(takes_context=True)
+def get_purchases_count(context, **kwargs):
+    return Purchase.objects.filter(user=context['request'].user).count()

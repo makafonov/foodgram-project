@@ -7,6 +7,7 @@
 {% url 'signup' as url_signup %}
 {% url 'password_reset' as url_password_reset %}
 {% url 'password_change' as url_password_change %}
+{% load user_filters %}
 
 <nav class="nav">
     <div class="nav__container container">
@@ -32,7 +33,7 @@
                 {% if request.path == url_login or request.path == url_signup or request.path == url_password_reset %}nav__item_disabled{% endif %}
                 {% if request.path == purchases %}nav__item_active{% endif %}
                 "><a href="{{ purchases }}" class="nav__link link">Список покупок</a>
-                <span class="badge badge_style_blue nav__badge" id="counter">{{ user_purchases_count }}</span>
+                <span class="badge badge_style_blue nav__badge" id="counter">{% get_purchases_count %}</span>
             </li>
         </ul>
 
