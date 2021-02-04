@@ -1,31 +1,32 @@
 from django.contrib.auth import get_user_model
-from django.views.generic import DetailView
-from django.views.generic.list import MultipleObjectMixin
+from django.views.generic import ListView
+from django_filters.views import BaseFilterView
 
+from apps.recipes.filters import TagFilterSet
 from apps.recipes.models import Recipe
+from apps.recipes.views.mixins import TagContextMixin
 
 User = get_user_model()
 
 
-class ProfileView(DetailView, MultipleObjectMixin):
-    model = User
+class ProfileView(TagContextMixin, BaseFilterView, ListView):
+    model = Recipe
     template_name = 'recipes/profile.html'
     paginate_by = 6
-    context_object_name = 'profile_user'
-    slug_field = 'username'
-    slug_url_kwarg = 'username'
+    filterset_class = TagFilterSet
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(author__username=self.kwargs['username'])
 
     def get_context_data(self, **kwargs):
-        object_list = Recipe.objects.filter(author=self.get_object())
-        return super().get_context_data(object_list=object_list, **kwargs)
+        context = super().get_context_data(**kwargs)
 
-    @property
-    def extra_context(self):
-        """Flag user_is_follower."""
         author = User.objects.get(username=self.kwargs['username'])
-
         is_follower = False
         if self.request.user.is_authenticated:
             if self.request.user.follower.filter(author=author).exists():
                 is_follower = True
-        return {'user_is_follower': is_follower}
+        context['user_is_follower'] = is_follower
+        context['author'] = author
+        return context

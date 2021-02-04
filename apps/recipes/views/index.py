@@ -3,10 +3,11 @@ from django.views.generic import ListView
 from django_filters.views import BaseFilterView
 
 from apps.recipes.filters import TagFilterSet
-from apps.recipes.models import Favorite, Purchase, Recipe, Tag
+from apps.recipes.models import Favorite, Purchase, Recipe
+from apps.recipes.views.mixins import TagContextMixin
 
 
-class IndexView(BaseFilterView, ListView):
+class IndexView(TagContextMixin, BaseFilterView, ListView):
     model = Recipe
     template_name = 'recipes/index.html'
     paginate_by = 6
@@ -32,10 +33,3 @@ class IndexView(BaseFilterView, ListView):
                 ),
             )
         return queryset
-
-    @property
-    def extra_context(self):
-        return {
-            'active_tags': self.request.GET.getlist('tags'),
-            'tags': Tag.objects.all(),
-        }

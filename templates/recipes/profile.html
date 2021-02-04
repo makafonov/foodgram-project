@@ -2,10 +2,9 @@
 {% load static %}
 {% block title %}Рецепты{% endblock %}
 
-{% block header_title %}{{ profile_user.get_full_name|default:profile_user.username }}{% endblock header_title %}
+{% block header_title %}{{ author.get_full_name|default:author.username }}{% endblock header_title %}
 {% block content %}
-    {% include 'recipes/includes/button_subscribe.html' with author=profile_user %}
-
+    {% include 'recipes/includes/button_subscribe.html' with author=author %}
     <div class="card-list">
         {% for recipe in page_obj %}
             {% include 'recipes/includes/recipe_card.html' with recipe=recipe %}
