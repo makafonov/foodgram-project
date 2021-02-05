@@ -135,3 +135,4 @@ media
 staticfiles
 
 requests.http
+sent_emails
