@@ -6,6 +6,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from apps.recipes.forms import RecipeForm
 from apps.recipes.models import Recipe
 from apps.recipes.services import add_ingredients_to_recipe
+from apps.recipes.views.permissions import PermissionCheck
 
 
 class RecipeView(DetailView):
@@ -34,11 +35,10 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         )
 
 
-class RecipeUpdateView(LoginRequiredMixin, UpdateView):
+class RecipeUpdateView(LoginRequiredMixin, PermissionCheck, UpdateView):
     model = Recipe
     template_name = 'recipes/add_recipe.html'
     form_class = RecipeForm
-    extra_context = {'is_created': True}
 
     def form_valid(self, form):
         recipe = form.save(commit=False)
@@ -56,6 +56,6 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
         )
 
 
-class RecipeDeleteView(DeleteView):
+class RecipeDeleteView(LoginRequiredMixin, PermissionCheck, DeleteView):
     model = Recipe
     success_url = reverse_lazy('recipes:index')
