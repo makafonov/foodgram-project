@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django_filters.views import BaseFilterView
 
@@ -17,16 +18,18 @@ class ProfileView(TagContextMixin, BaseFilterView, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(author__username=self.kwargs['username'])
+        author = get_object_or_404(User, username=self.kwargs['username'])
+
+        return queryset.filter(author=author)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        author = User.objects.get(username=self.kwargs['username'])
+        author = get_object_or_404(User, username=self.kwargs['username'])
         is_follower = False
         if self.request.user.is_authenticated:
             if self.request.user.follower.filter(author=author).exists():
                 is_follower = True
         context['user_is_follower'] = is_follower
         context['author'] = author
+
         return context
