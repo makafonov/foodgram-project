@@ -14,7 +14,7 @@ class Ingredient(models.Model):
         verbose_name='Единицы измерения',
     )
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
 

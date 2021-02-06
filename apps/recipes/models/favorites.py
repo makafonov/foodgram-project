@@ -22,7 +22,7 @@ class Favorite(models.Model):
         related_name='favorites',
     )
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         """Meta definition for Favorite."""
 
         verbose_name = 'Избранное'

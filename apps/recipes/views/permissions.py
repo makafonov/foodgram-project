@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 
 
-class PermissionCheck(object):
+class PermissionCheck:  # noqa: WPS306
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_superuser:
             if self.request.user.username != self.kwargs['username']:

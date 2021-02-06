@@ -1,7 +1,7 @@
 from apps.recipes.models import Tag
 
 
-class TagContextMixin:
+class TagContextMixin:  # noqa: WPS306
     @property
     def extra_context(self):
         return {

@@ -18,7 +18,7 @@ class Follow(models.Model):
         verbose_name='Автор',
     )
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
         constraints = [

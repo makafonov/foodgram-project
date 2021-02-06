@@ -32,7 +32,7 @@ class Tag(models.Model):
         verbose_name='Цвет',
     )
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 

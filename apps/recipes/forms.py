@@ -15,7 +15,7 @@ class RecipeForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'id': 'nameIngredient'}),
     )
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         model = Recipe
         fields = (
             'name',

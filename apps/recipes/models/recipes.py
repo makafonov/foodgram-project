@@ -40,7 +40,7 @@ class Recipe(models.Model):
         verbose_name='Ингредиенты',
     )
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
         ordering = ('-created_at', )
@@ -54,7 +54,7 @@ class RecipeIngredients(models.Model):
     recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE)
     amount = models.IntegerField(verbose_name='Количество')
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         verbose_name = 'Ингридиент рецепта'
         verbose_name_plural = 'Ингридиенты рецепта'
 

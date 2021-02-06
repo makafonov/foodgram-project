@@ -13,7 +13,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
     )
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         model = Favorite
         fields = ('user', 'id')
 
@@ -25,7 +25,7 @@ class FollowSerializer(serializers.ModelSerializer):
     )
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         model = Follow
         fields = ('user', 'id')
 
@@ -37,7 +37,7 @@ class PurchaseSerializer(serializers.ModelSerializer):
     )
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         model = Purchase
         fields = ('user', 'id')
 
@@ -45,6 +45,6 @@ class PurchaseSerializer(serializers.ModelSerializer):
 class IngredientSerializer(serializers.ModelSerializer):
     title = serializers.CharField(source='name')
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         model = Ingredient
         fields = ('title', 'dimension')

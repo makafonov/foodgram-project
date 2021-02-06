@@ -22,7 +22,7 @@ class Purchase(models.Model):
         related_name='purchases',
     )
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         """Meta definition for Purchase."""
 
         verbose_name = 'Покупка'

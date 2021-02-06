@@ -10,6 +10,6 @@ class TagFilterSet(django_filters.FilterSet):
         to_field_name='name',
     )
 
-    class Meta(object):
+    class Meta:  # noqa: WPS306
         model = Recipe
         fields = ('tags',)
