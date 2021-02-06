@@ -6,7 +6,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
 
-from apps.recipes.models import Ingredient, Recipe, RecipeIngredients
+from apps.recipes.models import Ingredient, Recipe, RecipeIngredient
 
 
 def add_ingredients_to_recipe(recipe, ingredients):
@@ -25,7 +25,7 @@ def add_ingredients_to_recipe(recipe, ingredients):
 
 
 def generate_pdf(user):
-    ingredients = RecipeIngredients.objects.filter(
+    ingredients = RecipeIngredient.objects.filter(
         recipe__purchases__user=user,
     ).values(
         'ingredient__name',

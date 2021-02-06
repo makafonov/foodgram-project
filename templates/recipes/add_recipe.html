@@ -43,7 +43,7 @@
 
                         <div class="form__field-group-ingredientes-container">
                             {% if recipe %}
-                                {% for ingredient in recipe.recipeingredients_set.all %}
+                                {% for ingredient in recipe.recipeingredient_set.all %}
                                     <div class="form__field-item-ingredient" id="ing_{{ forloop.counter }}">
                                         <span> {{ ingredient.ingredient.name }} {{ ingredient.amount }} {{ ingredient.ingredient.dimension }}</span>
                                         <span class="form__field-item-delete"></span>
