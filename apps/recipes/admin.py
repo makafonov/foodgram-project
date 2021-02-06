@@ -53,7 +53,7 @@ class PurchaseAdmin(admin.ModelAdmin):
 
 class UserAdminCustom(UserAdmin):
     list_display = (
-        'username'
+        'username',
         'email',
         'is_staff',
         'is_superuser',
