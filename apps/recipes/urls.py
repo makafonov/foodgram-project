@@ -10,7 +10,7 @@ urlpatterns = [
     path('favorites/', views.FavoriteView.as_view(), name='favorites'),
     path('purchases/', views.PurchaseView.as_view(), name='purchases'),
     path(
-        'purchases/download',
+        'purchases/download/',
         views.DownloadPurchasesListView.as_view(),
         name='purchases_download',
     ),
