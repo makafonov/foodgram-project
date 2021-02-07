@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.recipes.models import Recipe, Tag
+from apps.recipes.services import add_ingredients_to_recipe
 
 
 class RecipeForm(forms.ModelForm):
@@ -37,8 +38,8 @@ class RecipeForm(forms.ModelForm):
     def clean_ingredients(self):
         ingredients = list(
             zip(
-                self.data.getlist('nameIngredient'),
-                self.data.getlist('valueIngredient'),
+                self.data.getlist('nameIngredient'),  # type: ignore
+                self.data.getlist('valueIngredient'),  # type: ignore
             ),
         )
         if not ingredients:
@@ -50,3 +51,13 @@ class RecipeForm(forms.ModelForm):
                 'amount': amount,
             } for name, amount in ingredients
         ]
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.save()
+        ingredients = self.cleaned_data['ingredients']
+        self.cleaned_data['ingredients'] = []
+        self.save_m2m()
+        add_ingredients_to_recipe(self.instance, ingredients)
+
+        return instance
