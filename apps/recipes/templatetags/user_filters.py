@@ -1,6 +1,6 @@
 from django import template
 
-from apps.recipes.models import Favorite, Follow, Purchase
+from apps.recipes.models import Purchase
 
 register = template.Library()
 
@@ -12,26 +12,17 @@ def addclass(field, css):
 
 @register.simple_tag(takes_context=True)
 def is_favorite(context):
-    return Favorite.objects.filter(
-        user=context['user'],
-        recipe=context['recipe'],
-    ).exists()
+    return context['user'].favorites.filter(recipe=context['recipe']).exists()
 
 
 @register.simple_tag(takes_context=True)
 def is_follower(context):
-    return Follow.objects.filter(
-        user=context['user'],
-        author=context['author'],
-    ).exists()
+    return context['user'].follower.filter(author=context['author']).exists()
 
 
 @register.simple_tag(takes_context=True)
 def is_purchase(context):
-    return Purchase.objects.filter(
-        user=context['user'],
-        recipe=context['recipe'],
-    ).exists()
+    return context['user'].purchases.filter(recipe=context['recipe']).exists()
 
 
 @register.simple_tag(takes_context=True)
