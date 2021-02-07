@@ -1,5 +1,4 @@
 # flake8: noqa
-from apps.recipes.views.errors import page_not_found, server_error
 from apps.recipes.views.favorites import FavoriteView
 from apps.recipes.views.index import IndexView
 from apps.recipes.views.profile import ProfileView
