@@ -69,28 +69,23 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 # Database
 DATABASES = {
-    'default':
-        {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        },
+    'default': {
+        'ENGINE': os.environ.get('DB_ENGINE'),
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('DJANGO_DATABASE_HOST'),
+        'PORT': os.environ.get('DJANGO_DATABASE_PORT'),
+    }
 }
 
 # Password validation
 _PASS = 'django.contrib.auth.password_validation'  # noqa: S105
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': '{0}.UserAttributeSimilarityValidator'.format(_PASS)
-    },
-    {
-        'NAME': '{0}.MinimumLengthValidator'.format(_PASS)
-    },
-    {
-        'NAME': '{0}.CommonPasswordValidator'.format(_PASS)
-    },
-    {
-        'NAME': '{0}.NumericPasswordValidator'.format(_PASS)
-    },
+    {'NAME': '{0}.UserAttributeSimilarityValidator'.format(_PASS)},
+    {'NAME': '{0}.MinimumLengthValidator'.format(_PASS)},
+    {'NAME': '{0}.CommonPasswordValidator'.format(_PASS)},
+    {'NAME': '{0}.NumericPasswordValidator'.format(_PASS)},
 ]
 
 # Internationalization

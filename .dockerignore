@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+.git
+.gitignore
+.venv
+.vscode
+
+# Docker
+**/Dockerfile
+docker-compose.yaml
+
+media/*
+sent_emails
+staticfiles
+
+.env
+**/.DS_Store
+*.md
+Makefile
+.python-version
+nginx.conf
+setup.cfg
+requests.http
+poetry.lock
+db.sqlite3
+pyproject.toml
+dump.json
