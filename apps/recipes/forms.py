@@ -45,12 +45,19 @@ class RecipeForm(forms.ModelForm):
         if not ingredients:
             raise forms.ValidationError('Отсутствуют ингредиенты')
 
-        return [
-            {
-                'name': name,
-                'amount': amount,
-            } for name, amount in ingredients
-        ]
+        ingredients_clean = []
+        for name, amount in ingredients:
+            if int(amount) < 1:
+                raise forms.ValidationError(
+                    'Исправьте количество ингредиента "{0}"'.format(name),
+                )
+            else:
+                ingredients_clean.append({
+                    'name': name,
+                    'amount': amount,
+                })
+
+        return ingredients_clean
 
     def save(self, commit=True):
         instance = super().save(commit=False)
