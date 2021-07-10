@@ -5,8 +5,11 @@ __pycache__/
 
 .git
 .gitignore
+.github
+
 .venv
 .vscode
+.idea
 
 # Docker
 **/Dockerfile
@@ -17,14 +20,18 @@ sent_emails
 staticfiles
 
 .env
-**/.DS_Store
-*.md
+.env.example
+
 Makefile
+
 .python-version
-nginx.conf
+.tool-versions
+
+infra/nginx.conf
 setup.cfg
 requests.http
-poetry.lock
 db.sqlite3
-pyproject.toml
-dump.json
+requirements.txt
+
+**/.DS_Store
+*.md

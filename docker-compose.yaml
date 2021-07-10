@@ -7,11 +7,10 @@ volumes:
 
 services:
   db:
-    image: postgres:12.4
+    image: postgres:12.6-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - ./.env
+    env_file: .env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
       interval: 3s
@@ -21,9 +20,8 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./infra/docker/Dockerfile
     image: makafonov/foodgram:latest
-    restart: always
     command: gunicorn server.wsgi:application --bind 0.0.0.0:8000
     depends_on:
       db:
@@ -31,16 +29,15 @@ services:
     volumes:
       - static_volume:/code/staticfiles
       - media_volume:/code/media
-    env_file:
-      - ./.env
+    env_file: .env
 
   nginx:
     image: nginx:1.19.6-alpine
     depends_on:
       - web
     ports:
-      - "80:80"
+      - 80:80
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./infra/nginx.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/code/staticfiles
       - media_volume:/code/media
