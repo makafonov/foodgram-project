@@ -138,4 +138,3 @@ staticfiles
 
 requests.http
 sent_emails
-setup.cfg

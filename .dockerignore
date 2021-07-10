@@ -28,7 +28,6 @@ Makefile
 .tool-versions
 
 infra/nginx.conf
-setup.cfg
 requests.http
 db.sqlite3
 requirements.txt

@@ -1,0 +1,27 @@
+[flake8]
+# flake8 don't support pyproject.toml :/
+format = wemake
+
+accept-encodings = utf-8
+enable-extensions = G
+isort-show-traceback = True
+show-source = True
+statistics = False
+doctests = True
+
+max-complexity = 6
+max-line-length = 80
+
+max-imports = 17
+
+ignore =
+  D
+
+exclude =
+  __pycache__
+  .git
+  .venv
+
+  migrations
+
+per-file-ignores =
