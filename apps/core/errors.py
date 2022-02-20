@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 _HTTP404 = 404
 _HTTP500 = 500
 

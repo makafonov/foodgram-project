@@ -2,6 +2,7 @@ from django import template
 
 from apps.recipes.models import Purchase
 
+
 register = template.Library()
 
 
