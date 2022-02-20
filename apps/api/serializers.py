@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from apps.recipes.models import Favorite, Follow, Ingredient, Purchase, Recipe
 
+
 User = get_user_model()
 
 

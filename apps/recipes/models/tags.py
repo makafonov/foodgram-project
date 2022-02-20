@@ -1,5 +1,6 @@
 from django.db import models
 
+
 _TAG_MAX_LENGTH = 10
 _COLOR_MAX_LENGTH = 6
 

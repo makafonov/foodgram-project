@@ -4,6 +4,7 @@ from django.urls import path
 from apps.users import views
 from apps.users.forms import UserLoginForm
 
+
 urlpatterns = [
     path('signup/', views.SignUp.as_view(), name='signup'),
     path(

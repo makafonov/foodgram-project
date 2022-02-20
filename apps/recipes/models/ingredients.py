@@ -1,5 +1,6 @@
 from django.db import models
 
+
 _TITLE_MAX_LENGTH = 100
 _DIMENSION_MAX_LENGTH = 20
 

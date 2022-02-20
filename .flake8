@@ -25,3 +25,4 @@ exclude =
   migrations
 
 per-file-ignores =
+  server/settings.py:WPS407,WPS226

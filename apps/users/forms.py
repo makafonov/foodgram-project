@@ -6,6 +6,7 @@ from django.contrib.auth.forms import (
     UsernameField,
 )
 
+
 User = get_user_model()
 
 

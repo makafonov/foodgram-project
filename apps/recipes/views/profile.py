@@ -7,6 +7,7 @@ from apps.recipes.filters import TagFilterSet
 from apps.recipes.models import Recipe
 from apps.recipes.views.mixins import TagContextMixin
 
+
 User = get_user_model()
 
 

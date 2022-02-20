@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from apps.api import serializers
 from apps.recipes.models import Favorite, Follow, Ingredient, Purchase
 
+
 _SUCCESS_RESPONSE = types.MappingProxyType({'success': True})
 _UNSUCCESS_RESPONSE = types.MappingProxyType({'success': False})
 

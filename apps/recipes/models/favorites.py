@@ -3,6 +3,7 @@ from django.db import models
 
 from apps.recipes.models.recipes import Recipe
 
+
 User = get_user_model()
 
 

@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from apps.api import views
 
+
 router = DefaultRouter()
 router.register('favorites', views.FavoriteApiView)
 router.register('subscriptions', views.FollowApiView)
